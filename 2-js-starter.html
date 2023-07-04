@@ -1,0 +1,115 @@
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <title>Quiz.js</title>
+  <style>
+    body {
+      margin: 1rem auto;
+      padding: 3rem;
+      font-family: sans-serif;
+    }
+    header {
+      width: 50%;
+      margin: 1em auto;
+    }
+    main {
+      min-width: 25rem;
+      max-width: 50%;
+      margin: 0px auto;
+      display: flex;
+      flex-direction: column;
+    }
+    #statement {
+      border: 1px solid black;
+      border-radius: 0.5rem;
+      box-shadow: 5px 5px 5px gray;
+      padding: 1rem;
+      font-size: x-large;
+      text-align: center;
+      margin: 1rem 0px;
+      min-height: 2em;
+    }
+    #explanation {
+      padding: 1rem;
+      text-align: center;
+    }
+    #options {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    button {
+      padding: 0.5rem;
+      font-size: medium;
+      border-radius: 5px;
+    }
+    .correct {
+      background-color: lightgreen;
+    }
+    .incorrect {
+      background-color: lightpink;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Quiz.js</h1>
+    <p>Do you know JS? Find out!</p>
+  </header>
+
+  <main>
+    <div id="statement"></div>
+
+    <div id="options">
+      <button name="true" id="true" value="true">true</button>
+      <button name="false" id="false" value="false">false</button>
+    </div>
+
+    <div id="explanation"></div>
+  </main>
+
+  <script type="text/javascript">
+    let statement = document.getElementById('statement');
+    let explanation = document.getElementById('explanation');
+    const optionButtons = document.getElementById('options');
+
+    const disable = (button) => {
+      button.setAttribute("disabled", "");
+    }
+
+    const enable = (button) => {
+      button.removeAttribute("disabled");
+    }
+
+    const isCorrect = (guess) => {
+      return guess === fact.answer;
+    }
+
+    const fact = {
+      statement: "'1' + '1' === '2'.",
+      answer: "false",
+      explanation: "The plus operator concatenates (joins together) strings, so '1' + '1' === '11'."
+    }
+
+    statement.textContent = fact.statement;
+
+    for (let button of optionButtons.children) {
+      button.addEventListener('click', (event) => {
+        explanation.textContent = fact.explanation;
+
+        for (let btn of optionButtons.children) {
+          disable(btn);
+        }
+
+        const guess = event.target.value;
+
+        if (isCorrect(guess)) {
+          event.target.classList.add('correct');
+        } else {
+          event.target.classList.add('incorrect');
+        }
+      });
+    }
+  </script>
+</body>
+</html>
